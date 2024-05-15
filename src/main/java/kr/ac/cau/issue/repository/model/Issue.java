@@ -7,24 +7,29 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "issues")
 public class Issue {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     @Column(nullable = false)
     String title;
     String description;
     LocalDateTime reportedAt;
 
-    String projectId;
+    @PrimaryKeyJoinColumn
+    @ManyToOne
+    Project project;
 
-    @Column(nullable = false)
+    @PrimaryKeyJoinColumn
     @OneToOne
     User reporter;
 
+    @PrimaryKeyJoinColumn
     @OneToOne
     User assignee;
 
+    @PrimaryKeyJoinColumn
     @OneToOne
     User fixer;
 

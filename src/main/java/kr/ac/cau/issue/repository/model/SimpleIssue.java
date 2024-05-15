@@ -1,8 +1,8 @@
 package kr.ac.cau.issue.repository.model;
 
 public interface SimpleIssue {
-    IssueStatus getIssueStatus();
-    IssuePriority getIssuePriority();
+    IssueStatus getStatus();
+    IssuePriority getPriority();
     String getTitle();
     User getAssignee();
 }
