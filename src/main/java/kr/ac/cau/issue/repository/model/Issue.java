@@ -21,15 +21,12 @@ public class Issue {
     @ManyToOne
     Project project;
 
-    @PrimaryKeyJoinColumn
     @OneToOne
     User reporter;
 
-    @PrimaryKeyJoinColumn
     @OneToOne
     User assignee;
 
-    @PrimaryKeyJoinColumn
     @OneToOne
     User fixer;
 

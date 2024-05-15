@@ -1,8 +1,13 @@
 package kr.ac.cau.issue.repository.model;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 public interface SimpleIssue {
+    int getId();
     IssueStatus getStatus();
     IssuePriority getPriority();
     String getTitle();
-    User getAssignee();
+    Optional<User> getAssignee();
+    LocalDateTime getReportedAt();
 }

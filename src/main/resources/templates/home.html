@@ -1,0 +1,16 @@
+<table>
+    <thead>
+    <tr>
+        <th>제목</th>
+        <th>담당자</th>
+        <th>생성 시각</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="issue : ${issues}">
+        <td th:text="${issue.title}"></td>
+        <td th:text="${issue.assignee}"></td>
+        <td th:text="${issue.reportedAt}"></td>
+    </tr>
+    </tbody>
+</table>
