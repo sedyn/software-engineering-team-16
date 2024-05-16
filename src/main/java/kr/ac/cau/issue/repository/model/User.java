@@ -13,7 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private boolean isAdmin = false;
+    private boolean admin = false;
     private String username;
     private String password;
 }

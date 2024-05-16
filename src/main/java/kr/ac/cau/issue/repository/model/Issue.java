@@ -21,13 +21,16 @@ public class Issue {
     @ManyToOne
     Project project;
 
-    @OneToOne
+    @PrimaryKeyJoinColumn
+    @ManyToOne
     User reporter;
 
-    @OneToOne
+    @PrimaryKeyJoinColumn
+    @ManyToOne
     User assignee;
 
-    @OneToOne
+    @PrimaryKeyJoinColumn
+    @ManyToOne
     User fixer;
 
     @Enumerated(EnumType.STRING)
@@ -38,4 +41,12 @@ public class Issue {
 
     @OneToMany(mappedBy = "issue")
     List<Comment> comments;
+
+    public String getAssigneeName() {
+        if (assignee != null) {
+            return assignee.getUsername();
+        } else {
+            return "Not Assigned";
+        }
+    }
 }

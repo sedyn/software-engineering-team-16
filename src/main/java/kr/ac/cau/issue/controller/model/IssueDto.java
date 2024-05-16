@@ -1,5 +1,6 @@
 package kr.ac.cau.issue.controller.model;
 
+import kr.ac.cau.issue.controller.ViewController;
 import kr.ac.cau.issue.repository.model.Issue;
 import kr.ac.cau.issue.repository.model.IssuePriority;
 import kr.ac.cau.issue.repository.model.IssueStatus;
@@ -8,7 +9,10 @@ import lombok.Getter;
 @Getter
 public class IssueDto {
 
-    private final int id;
+    private final int rawId;
+
+    private final String id;
+
     private final String title;
     private final String description;
 
@@ -16,12 +20,19 @@ public class IssueDto {
 
     private final IssueStatus status;
 
-    public IssueDto(Issue issue) {
-        id = issue.getId();
+    private final String assignee;
+
+    private final String reportedAt;
+
+    public IssueDto(String projectId, Issue issue) {
+        rawId = issue.getId();
+        id = String.format("%s-%d", projectId, issue.getId());
         title = issue.getTitle();
         description = issue.getDescription();
         priority = issue.getPriority();
         status = issue.getStatus();
+        assignee = issue.getAssigneeName();
+        reportedAt = issue.getReportedAt().format(ViewController.formatter);
     }
 
 }

@@ -5,5 +5,9 @@ public enum IssuePriority {
     Critical,
     Major,
     Minor,
-    Trivial,
+    Trivial;
+
+    public boolean isDefault() {
+        return this == Major;
+    }
 }

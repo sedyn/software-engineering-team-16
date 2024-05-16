@@ -5,5 +5,9 @@ public enum IssueStatus {
     Assigned,
     Resolved,
     Closed,
-    Reopened,
+    Reopened;
+
+    public boolean isDefault() {
+        return this == New;
+    }
 }
