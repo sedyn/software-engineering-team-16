@@ -22,6 +22,8 @@ public class IssueDto {
 
     private final String assignee;
 
+    private final String reporter;
+
     private final String reportedAt;
 
     public IssueDto(String projectId, Issue issue) {
@@ -32,6 +34,7 @@ public class IssueDto {
         priority = issue.getPriority();
         status = issue.getStatus();
         assignee = issue.getAssigneeName();
+        reporter = issue.getReporter().getUsername();
         reportedAt = issue.getReportedAt().format(ViewController.formatter);
     }
 

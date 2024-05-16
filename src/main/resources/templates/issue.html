@@ -10,7 +10,7 @@
             align-content: center;
         }
 
-        .metadata > form > .row {
+        .metadata > .row {
             height: 70px;
             display: flex;
             align-content: center;
@@ -32,55 +32,70 @@
     </div>
     <div class="row rounded shadow-sm bg-body-tertiary mt-2 pt-3 pb-3">
         <div class="col">
-            <textarea class="form-control h-100" th:text="${issue.getDescription()}">
-            </textarea>
-        </div>
-        <div class="col-2 metadata">
             <form>
                 <div class="row">
-                    <div class="col"
-                         th:text="${issue.getId()}"
-                    >
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col"
-                         th:text="${issue.getReportedAt()}"
-                    >
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col">
-                        <select class="form-select">
-                            <th:block th:each="u : ${users}">
-                                <option th:text="${u}" th:selected="${u} == ${issue.getAssignee()}"></option>
-                            </th:block>
-                        </select>
+                        <textarea name="description" class="form-control h-100" th:text="${issue.getDescription()}">
+                        </textarea>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <select class="form-select">
-                            <th:block th:each="p : ${priority}">
-                                <option th:text="${p}" th:selected="${p} == ${issue.getPriority()}"></option>
-                            </th:block>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <select class="form-select">
-                            <th:block th:each="s : ${status}">
-                                <option th:text="${s}" th:selected="${s} == ${issue.getStatus()}"></option>
-                            </th:block>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary">
-                            수정
-                        </button>
+                    <div class="col-2 metadata">
+                        <div class="row">
+                            <div class="col">
+                                <div>Issue</div>
+                                <div th:text="${issue.getId()}"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div>Reported at</div>
+                                <div th:text="${issue.getReportedAt()}"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div>Reported by</div>
+                                <div th:text="${issue.getReporter()}"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div>Assigned by</div>
+                                <select name="assignee" class="form-select">
+                                    <th:block th:each="u : ${users}">
+                                        <option th:text="${u}"
+                                                th:selected="${u} == ${issue.getAssignee()}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div>Priority</div>
+                                <select name="priority" class="form-select">
+                                    <th:block th:each="p : ${priority}">
+                                        <option th:text="${p}"
+                                                th:selected="${p} == ${issue.getPriority()}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div>Status</div>
+                                <select name="status" class="form-select">
+                                    <th:block th:each="s : ${status}">
+                                        <option th:text="${s}" th:selected="${s} == ${issue.getStatus()}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    수정
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -94,7 +109,7 @@
                         <textarea name="content" class="form-control h-100"></textarea>
                     </div>
                     <div class="col-1 d-flex align-items-center justify-content-center">
-                        <button type="submit" class="btn btn-primary">작성</button>
+                        <button type="submit" class="btn btn-primary w-100">작성</button>
                     </div>
                 </div>
             </form>

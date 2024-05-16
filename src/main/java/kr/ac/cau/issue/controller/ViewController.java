@@ -3,10 +3,7 @@ package kr.ac.cau.issue.controller;
 import kr.ac.cau.issue.controller.model.CommentDto;
 import kr.ac.cau.issue.controller.model.IssueDto;
 import kr.ac.cau.issue.controller.model.SimpleIssueDto;
-import kr.ac.cau.issue.repository.model.Issue;
-import kr.ac.cau.issue.repository.model.IssuePriority;
-import kr.ac.cau.issue.repository.model.IssueStatus;
-import kr.ac.cau.issue.repository.model.User;
+import kr.ac.cau.issue.repository.model.*;
 import kr.ac.cau.issue.service.IssueService;
 import kr.ac.cau.issue.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +32,7 @@ public class ViewController {
         List<SimpleIssueDto> issues = issueService
                 .getSimpleIssuesByProjectId(projectId)
                 .stream()
+                .sorted(Comparator.comparing(SimpleIssue::getReportedAt).reversed())
                 .map(issue -> {
                     String assigneeName = issue.getAssignee().map(User::getUsername).orElse(UserService.NOT_ASSIGNED_USER);
 
@@ -65,7 +64,12 @@ public class ViewController {
         Issue issue = issueService.getIssue(issueId).orElseThrow();
 
         List<String> users = userService.getAvailableAssignee();
-        List<CommentDto> comments = issue.getComments().stream().map(CommentDto::new).collect(Collectors.toList());
+        List<CommentDto> comments = issue
+                .getComments()
+                .stream()
+                .sorted(Comparator.comparing(Comment::getCreatedAt).reversed())
+                .map(CommentDto::new)
+                .collect(Collectors.toList());
 
         model.addAttribute("users", users);
         model.addAttribute("priority", IssuePriority.values());
