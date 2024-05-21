@@ -24,6 +24,11 @@
 
 <body>
 <div class="container">
+    <div class="row">
+        Welcome
+        <p th:text="${user.getUsername()}">
+        </p>
+    </div>
     <div class="row title rounded shadow-sm bg-body-tertiary mt-2">
         <div class="col"
              th:text="${issue.getTitle()}"

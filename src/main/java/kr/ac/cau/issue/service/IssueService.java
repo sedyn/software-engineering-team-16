@@ -29,11 +29,8 @@ public class IssueService {
         return issueRepository.findById(issueId);
     }
 
-    public void addIssue(String projectId, AddIssueRequest request) {
+    public void addIssue(User user, String projectId, AddIssueRequest request) {
         Project project = projectRepository.findById(projectId).orElseThrow();
-        User user = new User();
-        user.setId(1);
-
         Issue issue = new Issue();
         issue.setTitle(request.title());
         issue.setProject(project);

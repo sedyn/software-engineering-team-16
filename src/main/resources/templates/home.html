@@ -12,6 +12,11 @@
 </head>
 
 <div class="container">
+    <div class="row">
+        Welcome
+        <p th:text="${user.getUsername()}">
+        </p>
+    </div>
     <form method="post" th:action="@{'/project/' + ${projectId} + '/issue'}">
         <div class="d-flex align-items-center issue row shadow-sm bg-body-secondary rounded mt-2">
             <div class="col-1 text-center">

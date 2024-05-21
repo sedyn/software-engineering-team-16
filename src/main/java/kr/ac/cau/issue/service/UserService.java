@@ -33,4 +33,8 @@ public class UserService {
         return names;
     }
 
+    public Optional<User> getUserByCredential(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password);
+    }
+
 }
