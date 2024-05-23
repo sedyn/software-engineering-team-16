@@ -7,6 +7,7 @@ import kr.ac.cau.issue.controller.model.SimpleIssueDto;
 import kr.ac.cau.issue.repository.ProjectRepository;
 import kr.ac.cau.issue.repository.model.*;
 import kr.ac.cau.issue.service.IssueService;
+import kr.ac.cau.issue.service.ProjectService;
 import kr.ac.cau.issue.service.SessionService;
 import kr.ac.cau.issue.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ViewController {
     private final UserService userService;
     private final SessionService sessionService;
 
-    private final ProjectRepository projectRepository;
+    private final ProjectService projectService;
     private static final String REDIRECT_TO_LOGIN = "redirect:/login";
 
 
@@ -52,7 +53,7 @@ public class ViewController {
             return REDIRECT_TO_LOGIN;
         }
 
-        model.addAttribute("projects", projectRepository.findAll());
+        model.addAttribute("projects", projectService.getProjects());
 
         return "project";
     }
