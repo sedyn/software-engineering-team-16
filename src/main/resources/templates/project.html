@@ -26,6 +26,19 @@
             </form>
         </div>
     </div>
+    <div class="row mt-2 pt-3 shadow-sm bg-body-secondary rounded">
+        <div class="col">
+            <form action="/project" method="post">
+                <div class="input-group">
+                    <input type="text" aria-label="Id" name="id" placeholder="Project Id"
+                           class="form-control">
+                    <input type="text" aria-label="Description" name="description" placeholder="Description"
+                           class="form-control">
+                    <button type="submit" class="btn btn-primary">Create new project</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <div th:each="project : ${projects}" class="row mt-2 p-2 shadow-sm bg-body-secondary rounded">
         <div class="col-2">
             <a th:href="@{'/project/' + ${project.getId()}}" th:text="${project.getId()}">
@@ -33,6 +46,11 @@
         </div>
         <div class="col">
             <div th:text="${project.getName()}"></div>
+        </div>
+        <div class="col-2 text-end">
+            <a th:href="@{'/project/' + ${project.getId()} + '/statistic'}">
+                Statistic
+            </a>
         </div>
     </div>
 </div>

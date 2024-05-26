@@ -10,6 +10,9 @@ import lombok.Data;
 @Data
 @Entity(name = "users")
 public class User {
+
+    public static final String NOT_ASSIGNED_USER = "Not Assigned";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -5,9 +5,7 @@ import java.time.LocalDateTime;
 public interface IssueStatisticRecord {
 
     LocalDateTime getDatetime();
-
-    IssueStatus getStatus();
-
-    int getIssueCount();
+    String getStatus();
+    int getCount();
 
 }

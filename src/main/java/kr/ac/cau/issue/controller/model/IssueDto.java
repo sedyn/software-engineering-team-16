@@ -22,19 +22,22 @@ public class IssueDto {
 
     private final String assignee;
 
+    private final String fixer;
+
     private final String reporter;
 
     private final String reportedAt;
 
     public IssueDto(String projectId, Issue issue) {
-        rawId = issue.getId();
-        id = String.format("%s-%d", projectId, issue.getId());
+        rawId = issue.getIssueId();
+        id = String.format("%s-%d", projectId, issue.getIssueId());
         title = issue.getTitle();
         description = issue.getDescription();
         priority = issue.getPriority();
         status = issue.getStatus();
         assignee = issue.getAssigneeName();
         reporter = issue.getReporter().getUsername();
+        fixer = issue.getFixerName();
         reportedAt = issue.getReportedAt().format(ProjectController.formatter);
     }
 

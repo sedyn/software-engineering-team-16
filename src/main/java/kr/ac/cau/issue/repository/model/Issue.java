@@ -7,7 +7,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Entity(name = "issues")
+@Entity
+@Table(
+        name = "issues",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "ISSUE_ID",
+                        columnNames = {"issue_id", "project_id"}
+                )
+        })
 public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +24,8 @@ public class Issue {
     String title;
     String description;
     LocalDateTime reportedAt;
+
+    int issueId;
 
     @PrimaryKeyJoinColumn
     @ManyToOne
@@ -45,6 +55,14 @@ public class Issue {
     public String getAssigneeName() {
         if (assignee != null) {
             return assignee.getUsername();
+        } else {
+            return "Not Assigned";
+        }
+    }
+
+    public String getFixerName() {
+        if (fixer != null) {
+            return fixer.getUsername();
         } else {
             return "Not Assigned";
         }

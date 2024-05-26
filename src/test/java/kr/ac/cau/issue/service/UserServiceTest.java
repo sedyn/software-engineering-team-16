@@ -48,7 +48,7 @@ public class UserServiceTest {
         user1.setUsername("A");
         user2.setUsername("B");
 
-        List<String> expected = List.of("A", "B", UserService.NOT_ASSIGNED_USER);
+        List<String> expected = List.of("A", "B", User.NOT_ASSIGNED_USER);
         when(userRepository.findAllByAdminFalse()).thenReturn(List.of(user1, user2));
         List<String> actual = userService.getAvailableAssignee();
 

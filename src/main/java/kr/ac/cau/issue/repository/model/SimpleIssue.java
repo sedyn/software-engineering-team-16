@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface SimpleIssue {
-    int getId();
+    int getIssueId();
     IssueStatus getStatus();
     IssuePriority getPriority();
     String getTitle();

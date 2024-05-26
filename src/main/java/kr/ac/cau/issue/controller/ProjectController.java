@@ -1,25 +1,23 @@
 package kr.ac.cau.issue.controller;
 
+import kr.ac.cau.issue.controller.model.AddProjectRequest;
 import kr.ac.cau.issue.controller.model.SimpleIssueDto;
 import kr.ac.cau.issue.controller.resolver.UserSession;
-import kr.ac.cau.issue.repository.model.IssuePriority;
-import kr.ac.cau.issue.repository.model.IssueStatus;
-import kr.ac.cau.issue.repository.model.SimpleIssue;
-import kr.ac.cau.issue.repository.model.User;
+import kr.ac.cau.issue.repository.model.*;
 import kr.ac.cau.issue.service.IssueService;
 import kr.ac.cau.issue.service.ProjectService;
 import kr.ac.cau.issue.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static kr.ac.cau.issue.repository.model.User.NOT_ASSIGNED_USER;
 
 @RequiredArgsConstructor
 @Controller
@@ -42,18 +40,32 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}")
-    public String projectHome(Model model, @PathVariable String projectId, @UserSession User user) {
+    public String projectHome(
+            Model model,
+            @PathVariable String projectId,
+            @UserSession User user,
+            @RequestParam(required = false) String assignee,
+            @RequestParam(required = false) String priority,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String reporter
+    ) {
         final String upperCaseProjectId = projectId.toUpperCase();
         List<SimpleIssueDto> issues = issueService
-                .getSimpleIssuesByProjectId(projectId)
+                .getSimpleIssuesByProjectId(
+                        projectId,
+                        assignee,
+                        reporter,
+                        status,
+                        priority
+                )
                 .stream()
-                .sorted(Comparator.comparing(SimpleIssue::getReportedAt).reversed())
+                .sorted(Comparator.comparing(Issue::getReportedAt).reversed())
                 .map(issue -> {
-                    String assigneeName = issue.getAssignee().map(User::getUsername).orElse(UserService.NOT_ASSIGNED_USER);
+                    String assigneeName = issue.getAssigneeName();
 
                     return new SimpleIssueDto(
-                            issue.getId(),
-                            String.format("%s-%d", upperCaseProjectId, issue.getId()),
+                            issue.getIssueId(),
+                            String.format("%s-%d", upperCaseProjectId, issue.getIssueId()),
                             issue.getTitle(),
                             issue.getStatus(),
                             issue.getPriority(),
@@ -73,5 +85,11 @@ public class ProjectController {
         model.addAttribute("issues", issues);
 
         return "home";
+    }
+
+    @PostMapping("")
+    public String addProject(AddProjectRequest request) {
+        projectService.addProject(request.getId(), request.getDescription());
+        return "redirect:/project";
     }
 }

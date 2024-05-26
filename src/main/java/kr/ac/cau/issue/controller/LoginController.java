@@ -30,6 +30,15 @@ public class LoginController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("session", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        return "redirect:/login";
+    }
+
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String postLogin(HttpServletResponse response, LoginRequest request) {
         Optional<User> optionalUser = userService.getUserByCredential(request.getUsername(), request.getPassword());

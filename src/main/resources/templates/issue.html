@@ -37,7 +37,7 @@
     </div>
     <div class="row rounded shadow-sm bg-body-tertiary mt-2 pt-3 pb-3">
         <div class="col">
-            <form>
+            <form method="post" id="detail">
                 <div class="row">
                     <div class="col">
                         <textarea name="description" class="form-control h-100" th:text="${issue.getDescription()}">
@@ -75,6 +75,17 @@
                         </div>
                         <div class="row">
                             <div class="col">
+                                <div>Fixed by</div>
+                                <select name="fixer" class="form-select">
+                                    <th:block th:each="u : ${users}">
+                                        <option th:text="${u}"
+                                                th:selected="${u} == ${issue.getFixer()}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
                                 <div>Priority</div>
                                 <select name="priority" class="form-select">
                                     <th:block th:each="p : ${priority}">
@@ -96,7 +107,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <button type="submit" class="btn btn-primary w-100">
+                                <button type="submit" form="detail" class="btn btn-primary w-100">
                                     수정
                                 </button>
                             </div>
@@ -108,13 +119,13 @@
     </div>
     <div class="row">
         <div class="col">
-            <form th:action="@{'/project/' + ${projectId} + '/issue/' + ${issueId} + '/comment'}" method="post">
+            <form id="comment" th:action="@{'/project/' + ${projectId} + '/issue/' + ${issue.rawId} + '/comment'}" method="post">
                 <div class="row shadow-sm rounded bg-body-tertiary mt-2 pb-1 pt-1 comment">
                     <div class="col">
                         <textarea name="content" class="form-control h-100"></textarea>
                     </div>
                     <div class="col-1 d-flex align-items-center justify-content-center">
-                        <button type="submit" class="btn btn-primary w-100">작성</button>
+                        <button type="submit" form="comment" class="btn btn-primary w-100">작성</button>
                     </div>
                 </div>
             </form>

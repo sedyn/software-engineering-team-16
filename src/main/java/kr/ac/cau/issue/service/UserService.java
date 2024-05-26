@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static kr.ac.cau.issue.repository.model.User.NOT_ASSIGNED_USER;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
-
-    public static final String NOT_ASSIGNED_USER = "Not Assigned";
 
     private final UserRepository userRepository;
 

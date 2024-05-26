@@ -1,9 +1,6 @@
 package kr.ac.cau.issue.controller;
 
-import kr.ac.cau.issue.controller.model.AddCommentRequest;
-import kr.ac.cau.issue.controller.model.AddIssueRequest;
-import kr.ac.cau.issue.controller.model.CommentDto;
-import kr.ac.cau.issue.controller.model.IssueDto;
+import kr.ac.cau.issue.controller.model.*;
 import kr.ac.cau.issue.controller.resolver.UserSession;
 import kr.ac.cau.issue.repository.model.*;
 import kr.ac.cau.issue.service.CommentService;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -50,9 +48,8 @@ public class IssueController {
             AddCommentRequest request
     ) {
         Comment comment = new Comment();
+        Issue issue = issueService.getIssue(issueId, projectId).orElseThrow();
 
-        Issue issue = new Issue();
-        issue.setId(issueId);
         comment.setIssue(issue);
         comment.setUser(user);
 
@@ -65,7 +62,7 @@ public class IssueController {
 
     @GetMapping("/issue/{issueId}")
     public String issueDetail(Model model, @PathVariable String projectId, @PathVariable int issueId, @UserSession User user) {
-        Issue issue = issueService.getIssue(issueId).orElseThrow();
+        Issue issue = issueService.getIssue(issueId, projectId).orElseThrow();
 
         List<String> users = userService.getAvailableAssignee();
         List<CommentDto> comments = issue
@@ -84,5 +81,32 @@ public class IssueController {
         model.addAttribute("comments", comments);
 
         return "issue";
+    }
+
+    @PostMapping("/issue/{issueId}")
+    public String updateDetail(
+            @PathVariable String projectId,
+            @PathVariable int issueId,
+            UpdateIssueDetailRequest request) {
+        issueService.updateIssueDetail(
+                projectId,
+                issueId,
+                request.description(),
+                request.fixer(),
+                request.assignee(),
+                request.status(),
+                request.priority()
+        );
+
+        return "redirect:/project/" + projectId + "/issue/" + issueId;
+    }
+
+    @GetMapping("/statistic")
+    public String statistic(Model model, @PathVariable String projectId, @UserSession User user) {
+        Map<String, Map<IssueStatus, Integer>> statistic = issueService.getIssueStatistic(projectId);
+
+        model.addAttribute("user", user);
+        model.addAttribute("statistic", statistic);
+        return "statistic";
     }
 }
