@@ -1,6 +1,6 @@
 package kr.ac.cau.issue.controller.model;
 
-import kr.ac.cau.issue.controller.ViewController;
+import kr.ac.cau.issue.controller.ProjectController;
 import kr.ac.cau.issue.repository.model.Comment;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public class CommentDto {
     public CommentDto(Comment comment) {
         commenter = comment.getUser().getUsername();
         content = comment.getContent();
-        createdAt = comment.getCreatedAt().format(ViewController.formatter);
+        createdAt = comment.getCreatedAt().format(ProjectController.formatter);
     }
 
 }

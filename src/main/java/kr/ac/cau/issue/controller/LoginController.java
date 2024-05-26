@@ -3,6 +3,7 @@ package kr.ac.cau.issue.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.ac.cau.issue.controller.model.LoginRequest;
+import kr.ac.cau.issue.controller.model.RegisterRequest;
 import kr.ac.cau.issue.repository.model.Session;
 import kr.ac.cau.issue.repository.model.User;
 import kr.ac.cau.issue.service.SessionService;
@@ -43,6 +44,12 @@ public class LoginController {
 
         Cookie cookie = new Cookie("session", session.getId().toString());
         response.addCookie(cookie);
+        return "redirect:/project";
+    }
+
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String register(RegisterRequest request) {
+        userService.addUser(request.getUsername(), request.getPassword());
         return "redirect:/project";
     }
 

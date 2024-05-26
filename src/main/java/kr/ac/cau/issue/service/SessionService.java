@@ -6,6 +6,7 @@ import kr.ac.cau.issue.repository.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -14,8 +15,8 @@ public class SessionService {
 
     private final SessionRepository sessionRepository;
 
-    public User getUserFromSession(UUID sessionId) {
-        return sessionRepository.findById(sessionId).orElseThrow().getUser();
+    public Optional<User> getUserFromSession(UUID sessionId) {
+        return sessionRepository.findById(sessionId).map(Session::getUser);
     }
 
     public Session createSession(User user) {

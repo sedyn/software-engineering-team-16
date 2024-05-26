@@ -1,5 +1,6 @@
 package kr.ac.cau.issue.service;
 
+import kr.ac.cau.issue.repository.ProjectRepository;
 import kr.ac.cau.issue.repository.model.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,9 @@ import java.util.List;
 @Service
 public class ProjectService {
 
-    private final ProjectService projectService;
+    private final ProjectRepository projectRepository;
 
-    public List<Project> getProjects() {
-        return projectService.getProjects();
+    public Iterable<Project> getProjects() {
+        return projectRepository.findAll();
     }
 }

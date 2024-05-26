@@ -25,6 +25,14 @@ public class UserService {
         return userRepository.findAllByAdminFalse();
     }
 
+    public void addUser(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setAdmin(false);
+        userRepository.save(user);
+    }
+
     public List<String> getAvailableAssignee() {
         List<User> users = getAllUsers();
         List<String> names = users.stream().map(User::getUsername).collect(Collectors.toList());

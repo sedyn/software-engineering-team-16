@@ -1,6 +1,6 @@
 package kr.ac.cau.issue.controller.model;
 
-import kr.ac.cau.issue.controller.ViewController;
+import kr.ac.cau.issue.controller.ProjectController;
 import kr.ac.cau.issue.repository.model.Issue;
 import kr.ac.cau.issue.repository.model.IssuePriority;
 import kr.ac.cau.issue.repository.model.IssueStatus;
@@ -35,7 +35,7 @@ public class IssueDto {
         status = issue.getStatus();
         assignee = issue.getAssigneeName();
         reporter = issue.getReporter().getUsername();
-        reportedAt = issue.getReportedAt().format(ViewController.formatter);
+        reportedAt = issue.getReportedAt().format(ProjectController.formatter);
     }
 
 }

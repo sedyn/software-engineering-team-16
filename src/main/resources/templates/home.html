@@ -12,45 +12,47 @@
 </head>
 
 <div class="container">
-    <div class="row">
-        Welcome
-        <p th:text="${user.getUsername()}">
-        </p>
-    </div>
-    <form method="post" th:action="@{'/project/' + ${projectId} + '/issue'}">
-        <div class="d-flex align-items-center issue row shadow-sm bg-body-secondary rounded mt-2">
-            <div class="col-1 text-center">
-                <button class="btn btn-light" type="submit">생성</button>
-            </div>
-            <div class="col">
-                <input class="form-control" name="title" placeholder="제목"/>
-            </div>
-            <div class="col-2">
-                <select class="form-select" name="assignee">
-                    <th:block th:each="u : ${users}">
-                        <option th:text="${u}" th:selected="${u} == 'Not Assigned'"></option>
-                    </th:block>
-                </select>
-            </div>
-            <div class="col-2">
-                <select class="form-select" name="priority">
-                    <th:block th:each="p : ${priority}">
-                        <option th:text="${p}" th:selected="${p.isDefault}"></option>
-                    </th:block>
-                </select>
-            </div>
-            <div class="col-2">
-                <select class="form-select" name="status">
-                    <th:block th:each="s : ${status}">
-                        <option th:text="${s}" th:selected="${s.isDefault}"></option>
-                    </th:block>
-                </select>
-            </div>
-            <div class="col-2">
-
-            </div>
+    <div class="row mt-2 p-2 shadow-sm bg-body-secondary rounded">
+        <div class="col">
+            <span class="badge text-bg-primary" th:text="${user.getUsername()}"></span>
         </div>
-    </form>
+    </div>
+    <div class="issue row shadow-sm bg-body-secondary rounded mt-2">
+        <form method="post" th:action="@{'/project/' + ${projectId} + '/issue'}">
+            <div class="row d-flex align-items-center h-100">
+                <div class="col-1 text-center">
+                    <button class="btn btn-light" type="submit">생성</button>
+                </div>
+                <div class="col">
+                    <input class="form-control" name="title" placeholder="제목"/>
+                </div>
+                <div class="col-2">
+                    <select class="form-select" name="assignee">
+                        <th:block th:each="u : ${users}">
+                            <option th:text="${u}" th:selected="${u} == 'Not Assigned'"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select class="form-select" name="priority">
+                        <th:block th:each="p : ${priority}">
+                            <option th:text="${p}" th:selected="${p.isDefault}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <select class="form-select" name="status">
+                        <th:block th:each="s : ${status}">
+                            <option th:text="${s}" th:selected="${s.isDefault}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="col-2">
+
+                </div>
+            </div>
+        </form>
+    </div>
 
     <div class="d-flex align-items-center issue row shadow-sm bg-body-tertiary rounded mt-2"
          th:each="issue : ${issues}"

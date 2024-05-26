@@ -24,10 +24,10 @@
 
 <body>
 <div class="container">
-    <div class="row">
-        Welcome
-        <p th:text="${user.getUsername()}">
-        </p>
+    <div class="row mt-2 p-2 shadow-sm bg-body-secondary rounded">
+        <div class="col">
+            <span class="badge text-bg-primary" th:text="${user.getUsername()}"></span>
+        </div>
     </div>
     <div class="row title rounded shadow-sm bg-body-tertiary mt-2">
         <div class="col"
