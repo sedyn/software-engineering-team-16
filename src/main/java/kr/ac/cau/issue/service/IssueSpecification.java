@@ -13,9 +13,9 @@ public class IssueSpecification {
                 criteriaBuilder.equal(root.get("assignee"), user);
     }
 
-    public static Specification<Issue> equalFixer(User user) {
+    public static Specification<Issue> equalReporter(User user) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("fixer"), user);
+                criteriaBuilder.equal(root.get("reporter"), user);
     }
 
     public static Specification<Issue> equalStatus(IssueStatus issueStatus) {

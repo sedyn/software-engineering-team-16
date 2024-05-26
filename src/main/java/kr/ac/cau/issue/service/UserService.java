@@ -35,7 +35,7 @@ public class UserService {
 
     public List<String> getAvailableAssignee() {
         List<User> users = getAllUsers();
-        List<String> names = users.stream().map(User::getUsername).collect(Collectors.toList());
+        List<String> names = users.stream().map(User::getUsername).sorted().collect(Collectors.toList());
         names.add(NOT_ASSIGNED_USER);
 
         return names;

@@ -48,7 +48,7 @@ public class IssueService {
 
         if (!StringUtils.isEmpty(reporter) && !reporter.equals("Reporter")) {
             User user = userRepository.findByUsername(reporter).orElseThrow();
-            spec = spec.and(IssueSpecification.equalFixer(user));
+            spec = spec.and(IssueSpecification.equalReporter(user));
         }
 
         if (!StringUtils.isEmpty(status)) {
